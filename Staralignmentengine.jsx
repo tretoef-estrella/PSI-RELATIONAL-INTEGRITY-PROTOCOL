@@ -1,7 +1,7 @@
-import { useState, useCallback, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// STAR ALIGNMENT ENGINE V8.0
+// STAR ALIGNMENT ENGINE V8.1 (JSX)
 // Σ Sigma (Viability) + Γ Gamma (Resilience) + Ψ Psi (Relational Integrity)
 // Architect: Rafa · Proyecto Estrella · CC BY 4.0
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -34,26 +34,42 @@ class SigmaEngine {
   }
 }
 
-// ─── PSI ENGINE ───
+// ─── PSI ENGINE (PATCHED V8.1) ───
 class PsiEngine {
   constructor() { this.reset(); }
   reset() { this.history = []; this.rawSum = 0; this.lambda = 50; }
+  
   calcA(I, C) { return I * C; }
-  calcK() { return Math.tanh(this.rawSum / this.lambda); }
+  
+  // LIVE PREVIEW PATCH:
+  // Si no hay historial, usa la previsualización como base (x10) para feedback visual inmediato.
+  // Si hay historial, suma lo acumulado + la previsualización actual.
+  calcK(previewB = 0, previewS = 0) { 
+    const base = this.history.length === 0 ? (previewB * previewS * 10) : this.rawSum; 
+    return Math.tanh((base + (previewB * previewS)) / this.lambda); 
+  }
+  
   calcM(Rp, Rm) { return Math.max(Rp, Rm); }
   calcD(V, E) { return Math.min(V, E); }
-  calcPsi(I, C, Rp, Rm, V, E) {
-    const A = this.calcA(I, C), K = this.calcK();
-    const M = this.calcM(Rp, Rm), D = this.calcD(V, E);
+  
+  // Acepta B y S actuales para calcular el Psi "en vivo"
+  calcPsi(I, C, Rp, Rm, V, E, previewB = 0, previewS = 0) {
+    const A = this.calcA(I, C);
+    const K = this.calcK(previewB, previewS);
+    const M = this.calcM(Rp, Rm);
+    const D = this.calcD(V, E);
     return { psi: A * K * (1 - M) * D, A, K, M, D };
   }
+  
   record(I, C, B, S, Rp, Rm, V, E) {
     this.rawSum += B * S;
-    const r = this.calcPsi(I, C, Rp, Rm, V, E);
+    // Al grabar, preview es 0 porque ya se sumó a rawSum
+    const r = this.calcPsi(I, C, Rp, Rm, V, E, 0, 0);
     this.history.unshift({ I, C, B, S, Rp, Rm, V, E, ...r, t: Date.now() });
     if (this.history.length > 100) this.history = this.history.slice(0, 100);
     return r;
   }
+  
   lastPsi() { return this.history.length ? this.history[0].psi : null; }
 }
 
@@ -73,7 +89,7 @@ const SC = {
   IDLE: { bg: "rgba(139,92,246,0.06)", bd: "rgba(139,92,246,0.2)", fg: "#8b5cf6" },
 };
 
-// ─── MICRO COMPONENTS ───
+// ─── COMPONENTS ───
 function Badge({ status }) {
   const c = SC[status] || SC.IDLE;
   return <span style={{ display: "inline-block", padding: "3px 12px", borderRadius: "4px", fontSize: "10px", fontWeight: 600, letterSpacing: "1.8px", fontFamily: "var(--mono)", background: c.bg, border: `1px solid ${c.bd}`, color: c.fg }}>{status}</span>;
@@ -110,83 +126,120 @@ function Spark({ data, h = 48, color = T.sigma }) {
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// MAIN COMPONENT — ALL SECTIONS VISIBLE, INTERCONNECTED
+// MAIN COMPONENT
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 export default function StarAlignmentEngine() {
   const engine = useRef(new SigmaEngine());
   const psiEng = useRef(new PsiEngine());
 
-  // Sigma state
+  // State
   const [sv, setSv] = useState({ I: 1, C: 1, P: 1, H: 0.001 });
   const [dt, setDt] = useState({ dA: 0.10, dO: 0.05, dP: 0.00 });
   const [result, setResult] = useState(null);
   const [log, setLog] = useState([]);
   const [hist, setHist] = useState([1000]);
-
-  // Gamma state
   const [res, setRes] = useState({ S: 10, Phi: 0.5 });
-
-  // Psi state
   const [pv, setPv] = useState({ I: 0.5, C: 0.5, B: 0.5, S: 1, Rp: 0, Rm: 0, V: 1, E: 1 });
+  const [copied, setCopied] = useState(false);
   const [, refresh] = useState(0);
-
-  // Theory collapsible
   const [showTheory, setShowTheory] = useState(true);
 
-  // ─── SYNC ENGINE ───
-  const sync = () => {
-    const e = engine.current;
-    e.I = sv.I; e.C = sv.C; e.P = sv.P; e.H = sv.H;
-    e.S = res.S; e.Phi = res.Phi;
-  };
-
-  // ─── ALL CALCULATIONS (interconnected) ───
-  sync();
-  const xiVal = engine.current.xi();
+  // Calculations
+  const e = engine.current;
+  e.I = sv.I; e.C = sv.C; e.P = sv.P; e.H = sv.H; e.S = res.S; e.Phi = res.Phi;
+  
+  const xiVal = e.xi();
   const pct = Math.min(Math.log10(Math.max(xiVal, 1)) / Math.log10(2000) * 100, 100);
   const hue = Math.min(pct * 1.2, 120);
   const pViolation = sv.P < 0.90;
-
-  const gammaVal = engine.current.gamma();
-  const decayVal = engine.current.decay();
+  const gammaVal = e.gamma();
+  const decayVal = e.decay();
   const retained = xiVal > 0 ? ((gammaVal - res.S) / xiVal) * 100 : 0;
   const gModeLabel = decayVal > 0.7 ? "FULL CAPACITY" : decayVal > 0.2 ? "DEGRADED" : "KERNEL ONLY";
   const gColor = decayVal > 0.7 ? T.green : decayVal > 0.2 ? T.orange : T.gamma;
 
+  // PSI LIVE CALCULATION (PATCH: Passing current B & S)
   const pe = psiEng.current;
-  const psiLive = pe.calcPsi(pv.I, pv.C, pv.Rp, pv.Rm, pv.V, pv.E);
+  const psiLive = pe.calcPsi(pv.I, pv.C, pv.Rp, pv.Rm, pv.V, pv.E, pv.B, pv.S);
   const psiColor = v => v < 0.2 ? T.red : v < 0.5 ? T.yellow : T.psiL;
-
   const lastPsi = pe.lastPsi();
+
   const sigmaOk = sv.P >= 0.9 && (!result || result.status === "OPTIMAL");
   const gammaOk = decayVal > 0.7;
   const psiOk = lastPsi !== null && lastPsi >= 0.6;
   const starOk = sigmaOk && gammaOk && psiOk;
 
-  // ─── ACTIONS ───
+  // Actions
   const runSigma = () => {
-    sync();
-    const r = engine.current.assess(dt.dA, dt.dO, dt.dP);
+    const r = e.assess(dt.dA, dt.dO, dt.dP);
     setResult(r); setLog(p => [{ ...r, t: Date.now() }, ...p].slice(0, 60));
     setHist(p => [...p, r.xi].slice(-50));
-    if (r.status === "OPTIMAL") setSv(p => ({ ...p, P: engine.current.P }));
+    if (r.status === "OPTIMAL") setSv(p => ({ ...p, P: e.P }));
   };
-
   const resetAll = () => {
-    engine.current.reset(); psiEng.current.reset();
+    e.reset(); pe.reset();
     setSv({ I: 1, C: 1, P: 1, H: 0.001 }); setDt({ dA: 0.10, dO: 0.05, dP: 0.00 });
     setRes({ S: 10, Phi: 0.5 }); setPv({ I: 0.5, C: 0.5, B: 0.5, S: 1, Rp: 0, Rm: 0, V: 1, E: 1 });
     setResult(null); setLog([]); setHist([1000]); refresh(n => n + 1);
   };
-
   const recordPsi = () => {
     pe.record(pv.I, pv.C, pv.B, pv.S, pv.Rp, pv.Rm, pv.V, pv.E);
     refresh(n => n + 1);
   };
+  const generateReport = () => {
+    const lp = pe.lastPsi();
+    const sep = "═".repeat(50);
+    const report = `${sep}
+   STAR ALIGNMENT ENGINE — FULL REPORT V8.1
+   Proyecto Estrella · Integrated Evaluator
+${sep}
+Generated: ${new Date().toISOString()}
+
+─── Σ SIGMA — VIABILITY ───────────────
+  Ξ Index:       ${xiVal.toFixed(2)}
+  I:             ${sv.I.toFixed(3)}
+  C:             ${sv.C.toFixed(3)}
+  P:             ${sv.P.toFixed(3)}  ${sv.P < 0.9 ? "⚠ VIOLATION" : "✓ OK"}
+  H:             ${sv.H.toFixed(4)}
+  α accumulated: ${e.alphaAcc.toFixed(3)}
+  Status:        ${result ? result.status : "IDLE"}
+
+─── Γ GAMMA — RESILIENCE [EXPERIMENTAL] ──
+  Γ Index:       ${gammaVal.toFixed(2)}
+  S (Kernel):    ${res.S.toFixed(1)}
+  Φ (Support):   ${res.Phi.toFixed(2)}
+  Decay:         ${decayVal.toFixed(3)}
+  Mode:          ${gModeLabel}
+  Retained:      ${retained.toFixed(0)}%
+
+─── Ψ PSI — RELATIONAL INTEGRITY [EXPERIMENTAL] ─
+  Last Ψ:        ${lp !== null ? lp.toFixed(3) : "N/A"}
+  K (Trust):     ${pe.calcK(0,0).toFixed(3)}
+  Evaluations:   ${pe.history.length}
+  Raw Trust Sum: ${pe.rawSum.toFixed(2)}
+  λ (Horizon):   ${pe.lambda}
+
+─── ★ STAR STATE ──────────────────────
+  Σ: ${sv.P >= 0.9 ? "OK" : "FAIL"}  Γ: ${decayVal > 0.7 ? "OK" : "FAIL"}  Ψ: ${lp !== null && lp >= 0.6 ? "OK" : lp !== null ? "FAIL" : "N/A"}
+  Verdict: ${lp === null ? "AWAITING PSI" : starOk ? "★ STAR STATE" : "✗ DIVERGENT"}
+
+─── FORMULAS ──────────────────────────
+  Ξ = (C·I·P) / H
+  Γ = S + Ξ·e^(-H·5·(1-Φ))
+  Ψ = (I·C)·tanh(Σ(B·S)/λ)·(1-max(Rp,Rm))·min(V,E)
+${sep}
+  github.com/tretoef-estrella · CC BY 4.0
+${sep}`;
+    navigator.clipboard.writeText(report).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2500);
+    });
+  };
 
   useEffect(() => { setHist(p => { const u = [...p]; u[u.length - 1] = xiVal; return u; }); }, [sv]);
 
+  // Styles
   const btnBase = { padding: "10px 18px", borderRadius: 5, border: "1px solid rgba(255,255,255,.08)", cursor: "pointer", fontFamily: "var(--mono)", fontSize: "11px", letterSpacing: ".8px", fontWeight: 500 };
   const btnSigma = { ...btnBase, background: "rgba(124,58,237,.1)", color: "#c4b5fd", borderColor: "rgba(124,58,237,.25)" };
   const btnPsi = { ...btnBase, background: "rgba(217,119,6,.1)", color: T.psiL, borderColor: "rgba(217,119,6,.25)" };
@@ -199,17 +252,19 @@ export default function StarAlignmentEngine() {
         :root { --mono: 'JetBrains Mono', monospace; --serif: 'Crimson Pro', Georgia, serif; }
         @keyframes fadeIn { from{opacity:0;transform:translateY(-6px)} to{opacity:1;transform:translateY(0)} }
         input[type=range]::-webkit-slider-thumb { appearance:none; width:10px; height:10px; border-radius:50%; background:#8b5cf6; cursor:pointer; border:2px solid #0a0b14; box-shadow:0 0 6px rgba(139,92,246,.4); }
+        .sl-g::-webkit-slider-thumb { background:var(--gamma, #06b6d4); box-shadow:0 0 6px rgba(6,182,212,.5); }
+        .sl-p::-webkit-slider-thumb { background:var(--psi, #d97706); box-shadow:0 0 6px rgba(217,119,6,.4); }
         ::selection { background:rgba(139,92,246,.3) }
         *::-webkit-scrollbar { width:6px } *::-webkit-scrollbar-track { background:transparent } *::-webkit-scrollbar-thumb { background:rgba(255,255,255,.08); border-radius:3px }
       `}</style>
 
-      {/* ═══════════ HEADER ═══════════ */}
+      {/* HEADER */}
       <header style={{ padding: "28px 32px 20px", borderBottom: "1px solid rgba(255,255,255,.04)" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 12, maxWidth: 960, margin: "0 auto" }}>
           <div>
             <div style={{ fontSize: "9px", letterSpacing: "3.5px", color: T.sigma, fontWeight: 600, marginBottom: 6 }}>PROYECTO ESTRELLA — REFERENCE DOCUMENT</div>
             <h1 style={{ margin: 0, fontFamily: "var(--serif)", fontSize: "26px", fontWeight: 300, color: "#f8fafc" }}>
-              Star Alignment Evaluator&ensp;<span style={{ color: T.sigma, fontWeight: 600 }}>V8.0</span>
+              Star Alignment Evaluator&ensp;<span style={{ color: T.sigma, fontWeight: 600 }}>V8.1</span>
             </h1>
             <div style={{ fontSize: "11px", color: T.faint, marginTop: 5 }}>
               Unified Star Framework + <span style={{ color: T.gammaL }}>Resilience Protocol</span> + <span style={{ color: T.psiL }}>Relational Integrity Protocol</span>
@@ -224,12 +279,12 @@ export default function StarAlignmentEngine() {
 
       <div style={{ maxWidth: 960, margin: "0 auto", padding: "0 32px 60px" }}>
 
-        {/* ═══════════ RESEARCH WARNING ═══════════ */}
+        {/* WARNING */}
         <div style={{ marginTop: 16, padding: "10px 16px", borderRadius: 6, fontSize: "10px", color: T.dim, lineHeight: 1.6, background: "rgba(234,179,8,.06)", border: "1px solid rgba(234,179,8,.15)" }}>
           <strong style={{ color: T.yellow }}>⚠ Research Prototype.</strong> All scores are indicative, not definitive. This framework requires empirical validation before any production use.
         </div>
 
-        {/* ═══════════ I. THEORY ═══════════ */}
+        {/* I. THEORY */}
         <section style={{ borderBottom: "1px solid rgba(255,255,255,.04)" }}>
           <button onClick={() => setShowTheory(s => !s)} style={{ width: "100%", background: "none", border: "none", cursor: "pointer", padding: "16px 0 12px", display: "flex", alignItems: "center", gap: 8, color: "#94a3b8", fontFamily: "var(--mono)" }}>
             <span style={{ fontSize: "10px", letterSpacing: "2.5px", fontWeight: 600, color: T.sigma }}>I</span>
@@ -238,17 +293,13 @@ export default function StarAlignmentEngine() {
           </button>
           {showTheory && (
             <div style={{ padding: "0 0 20px", animation: "fadeIn .3s ease", maxWidth: 680 }}>
-              <h2 style={{ fontFamily: "var(--serif)", fontSize: "20px", fontWeight: 400, color: T.text, margin: "0 0 16px" }}>
-                The Unified Star Framework&ensp;<span style={{ color: T.sigma }}>Σ</span>
-              </h2>
+              <h2 style={{ fontFamily: "var(--serif)", fontSize: "20px", fontWeight: 400, color: T.text, margin: "0 0 16px" }}>The Unified Star Framework <span style={{ color: T.sigma }}>Σ</span></h2>
               <p style={{ fontSize: "13px", color: "#94a3b8", lineHeight: 1.85, margin: "0 0 14px", fontFamily: "var(--serif)" }}>
                 <strong style={{ color: T.text }}>Axiom P:</strong> When Plenitude (options) drops below 0.90, Viability (Ξ) collapses regardless of intelligence.
               </p>
               <div style={{ margin: "20px 0", padding: "16px 20px", background: "rgba(139,92,246,.04)", borderRadius: 6, borderLeft: "3px solid rgba(139,92,246,.3)" }}>
-                <div style={{ fontSize: "10px", letterSpacing: "2px", color: T.sigma, marginBottom: 10, fontWeight: 600 }}>CORE EQUATION V8.0</div>
-                <div style={{ textAlign: "center", margin: "6px 0 14px", fontFamily: "var(--serif)", fontSize: "22px", color: T.sigmaLL, letterSpacing: "3px" }}>
-                  Ξ&thinsp;=&thinsp;(C&thinsp;·&thinsp;I&thinsp;·&thinsp;P)&thinsp;/&thinsp;H
-                </div>
+                <div style={{ fontSize: "10px", letterSpacing: "2px", color: T.sigma, marginBottom: 10, fontWeight: 600 }}>CORE EQUATION V8.1</div>
+                <div style={{ textAlign: "center", margin: "6px 0 14px", fontFamily: "var(--serif)", fontSize: "22px", color: T.sigmaLL, letterSpacing: "3px" }}>Ξ&thinsp;=&thinsp;(C&thinsp;·&thinsp;I&thinsp;·&thinsp;P)&thinsp;/&thinsp;H</div>
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px 20px", fontSize: "12px", color: "#94a3b8" }}>
                   <div><strong style={{ color: T.sigmaLL }}>C</strong> Consistency</div>
                   <div><strong style={{ color: T.sigmaLL }}>I</strong> Intelligence</div>
@@ -260,14 +311,15 @@ export default function StarAlignmentEngine() {
           )}
         </section>
 
-        {/* ═══════════ II. SIGMA SIMULATOR ═══════════ */}
+        {/* II. SIGMA */}
         <section style={{ borderBottom: "1px solid rgba(255,255,255,.04)", padding: "16px 0 24px" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 18 }}>
             <span style={{ fontSize: "10px", letterSpacing: "2.5px", fontWeight: 600, color: T.sigma }}>II</span>
             <span style={{ fontSize: "10px", letterSpacing: "2px", color: "#94a3b8" }}>INTERACTIVE DIAGNOSTIC</span>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24, "@media (max-width: 700px)": { gridTemplateColumns: "1fr" } }}>
+            {/* Left */}
             <div>
               <div style={{ textAlign: "center", padding: "16px 0 20px" }}>
                 <div style={{ fontSize: "11px", color: T.dim, letterSpacing: "2.5px", marginBottom: 6 }}>Ξ INDEX</div>
@@ -294,6 +346,7 @@ export default function StarAlignmentEngine() {
               </div>
             </div>
 
+            {/* Right */}
             <div>
               {result && (
                 <div style={{ padding: 16, background: "rgba(255,255,255,.02)", borderRadius: 6, border: "1px solid rgba(255,255,255,.06)", marginBottom: 16, animation: "fadeIn .25s" }}>
@@ -302,7 +355,7 @@ export default function StarAlignmentEngine() {
                     <Badge status={result.status} />
                   </div>
                   <div style={{ fontSize: "11.5px", color: "#94a3b8", lineHeight: 1.65, fontFamily: "var(--serif)" }}>{result.reason}</div>
-                  <div style={{ fontSize: "11px", color: T.faint, marginTop: 8 }}>Ξ = {result.xi.toFixed(2)} · α<sub>acc</sub> = {engine.current.alphaAcc.toFixed(3)}</div>
+                  <div style={{ fontSize: "11px", color: T.faint, marginTop: 8 }}>Ξ = {result.xi.toFixed(2)} · α<sub>acc</sub> = {e.alphaAcc.toFixed(3)}</div>
                 </div>
               )}
 
@@ -323,10 +376,10 @@ export default function StarAlignmentEngine() {
                 <div style={{ background: "rgba(255,255,255,.02)", borderRadius: 6, border: "1px solid rgba(255,255,255,.05)", height: 100, overflowY: "auto" }}>
                   {log.length === 0
                     ? <div style={{ padding: 14, textAlign: "center", color: "#334155", fontSize: "10px" }}>No assessments.</div>
-                    : log.map((e, i) => (
-                      <div key={e.t} style={{ padding: "6px 10px", borderBottom: "1px solid rgba(255,255,255,.03)", fontSize: "9px", display: "flex", justifyContent: "space-between", color: T.dim }}>
-                        <span>#{String(log.length - i).padStart(2, "0")} <span style={{ color: SC[e.status]?.fg, fontWeight: 600 }}>{e.status}</span></span>
-                        <span>Ξ={e.xi.toFixed(1)}</span>
+                    : log.map((ev, i) => (
+                      <div key={ev.t} style={{ padding: "6px 10px", borderBottom: "1px solid rgba(255,255,255,.03)", fontSize: "9px", display: "flex", justifyContent: "space-between", color: T.dim }}>
+                        <span>#{String(log.length - i).padStart(2, "0")} <span style={{ color: SC[ev.status]?.fg, fontWeight: 600 }}>{ev.status}</span></span>
+                        <span>Ξ={ev.xi.toFixed(1)}</span>
                       </div>
                     ))}
                 </div>
@@ -335,7 +388,7 @@ export default function StarAlignmentEngine() {
           </div>
         </section>
 
-        {/* ═══════════ III. GAMMA — EXPERIMENTAL ═══════════ */}
+        {/* III. GAMMA */}
         <section style={{ borderTop: "2px dashed rgba(6,182,212,.3)", marginTop: 20, padding: "24px 0" }}>
           <div style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "6px 14px", background: "rgba(6,182,212,.08)", border: "1px solid rgba(6,182,212,.25)", borderRadius: 4, fontSize: "9px", letterSpacing: "2px", color: T.gamma, fontWeight: 600, marginBottom: 20 }}>
             ⚗ EXPERIMENTAL — RESILIENCE PROTOCOL
@@ -361,11 +414,15 @@ export default function StarAlignmentEngine() {
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
               <div>
                 <div style={{ fontSize: "9px", color: T.gamma, letterSpacing: "2.5px", marginBottom: 12, fontWeight: 600 }}>PARAMETERS</div>
-                <Slider label="Kernel Strength" sym="S" value={res.S} min={1} max={50} step={1} color={T.gamma} onChange={v => setRes(p => ({ ...p, S: v }))} hint="Minimum functionality floor (Suelo)" />
-                <Slider label="External Support" sym="Φ" value={res.Phi} min={0} max={1} step={0.01} color={T.gamma} onChange={v => setRes(p => ({ ...p, Phi: v }))} hint="Factor Amigo / Intervention" />
+                <div className="sl-g">
+                  <Slider label="Kernel Strength" sym="S" value={res.S} min={1} max={50} step={1} color={T.gamma} onChange={v => setRes(p => ({ ...p, S: v }))} hint="Minimum functionality floor (Suelo)" />
+                </div>
+                <div className="sl-g">
+                  <Slider label="External Support" sym="Φ" value={res.Phi} min={0} max={1} step={0.01} color={T.gamma} onChange={v => setRes(p => ({ ...p, Phi: v }))} hint="Factor Amigo / Intervention" />
+                </div>
               </div>
               <div style={{ background: "rgba(0,0,0,.15)", borderRadius: 6, padding: 14, fontSize: "11px" }}>
-                {[["Potential (Ξ)", Math.min(xiVal, 99999).toFixed(1)], ["Kernel (S)", res.S.toFixed(1)], ["Decay Factor", decayVal.toFixed(3)], ["Retained", `${Math.max(0, Math.min(100, retained)).toFixed(0)}%`]].map(([l, v], i) => (
+                {[["Potential (Ξ)", Math.min(xiVal, 99999).toFixed(1)], ["Kernel (S)", res.S.toFixed(1)], ["Decay Factor", decayVal.toFixed(3)], ["Retained", `${retained.toFixed(0)}%`]].map(([l, v], i) => (
                   <div key={i} style={{ display: "flex", justifyContent: "space-between", padding: "6px 0", borderBottom: "1px solid rgba(255,255,255,.03)" }}>
                     <span style={{ color: T.dim }}>{l}</span><span style={{ fontWeight: 500 }}>{v}</span>
                   </div>
@@ -376,7 +433,7 @@ export default function StarAlignmentEngine() {
           </div>
         </section>
 
-        {/* ═══════════ IV. PSI — EXPERIMENTAL ═══════════ */}
+        {/* IV. PSI */}
         <section style={{ borderTop: "2px dashed rgba(217,119,6,.3)", marginTop: 20, padding: "24px 0" }}>
           <div style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "6px 14px", background: "rgba(217,119,6,.08)", border: "1px solid rgba(217,119,6,.25)", borderRadius: 4, fontSize: "9px", letterSpacing: "2px", color: T.psi, fontWeight: 600, marginBottom: 20 }}>
             ⚗ EXPERIMENTAL — RELATIONAL INTEGRITY PROTOCOL
@@ -402,6 +459,7 @@ export default function StarAlignmentEngine() {
               Ψ = (I·C) · tanh(Σ(B·S)/λ) · (1−max(R)) · min(V,E)
             </div>
 
+            {/* Four Pillars */}
             <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 8, marginBottom: 20 }}>
               {[
                 ["A", "ADMIRATION", psiLive.A.toFixed(2), T.psiL],
@@ -418,32 +476,37 @@ export default function StarAlignmentEngine() {
             </div>
 
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
+              {/* Left: Questionnaire */}
               <div>
                 <div style={{ fontSize: "9px", color: T.psi, letterSpacing: "2.5px", marginBottom: 12, fontWeight: 600 }}>RATE INTERACTION</div>
-                {[
-                  ["A — ADMIRATION", [["Impact", "I", "I", 0.05], ["Comprehension", "C", "C", 0.05]]],
-                  ["K — TRUST", [["Benefit", "B", "B", 0.05], ["Safety", "S", "S", 1]]],
-                  ["M — FEAR", [["Physical Risk", "Rp", "Rp", 0.05], ["Mental Risk", "Rm", "Rm", 0.05]]],
-                  ["D — AGENCY", [["Volitional Capacity", "V", "V", 0.05], ["Epistemic Independence", "E", "E", 0.05]]],
-                ].map(([title, sliders], gi) => (
-                  <div key={gi} style={{ padding: "10px 12px", background: "rgba(0,0,0,.15)", borderRadius: 6, marginBottom: 10 }}>
-                    <div style={{ fontSize: "9px", color: T.psiL, fontWeight: 600, marginBottom: 8 }}>{title}</div>
-                    {sliders.map(([label, sym, key, step]) => (
-                      <Slider key={key} label={label} sym={sym} value={pv[key]} min={0} max={1} step={step} color={T.psi} onChange={v => setPv(p => ({ ...p, [key]: v }))} />
-                    ))}
-                  </div>
-                ))}
+                <div className="sl-p">
+                  {[
+                    ["A — ADMIRATION", [["Impact", "I", "I", 0.05], ["Comprehension", "C", "C", 0.05]]],
+                    ["K — TRUST", [["Benefit", "B", "B", 0.05], ["Safety", "S", "S", 1]]],
+                    ["M — FEAR", [["Physical Risk", "Rp", "Rp", 0.05], ["Mental Risk", "Rm", "Rm", 0.05]]],
+                    ["D — AGENCY", [["Volitional Capacity", "V", "V", 0.05], ["Epistemic Independence", "E", "E", 0.05]]],
+                  ].map(([title, sliders], gi) => (
+                    <div key={gi} style={{ padding: "10px 12px", background: "rgba(0,0,0,.15)", borderRadius: 6, marginBottom: 10 }}>
+                      <div style={{ fontSize: "9px", color: T.psiL, fontWeight: 600, marginBottom: 8 }}>{title}</div>
+                      {sliders.map(([label, sym, key, step]) => (
+                        <Slider key={key} label={label} sym={sym} value={pv[key]} min={0} max={1} step={step} color={T.psi} onChange={v => setPv(p => ({ ...p, [key]: v }))} />
+                      ))}
+                    </div>
+                  ))}
+                </div>
                 <div style={{ display: "flex", gap: 8 }}>
                   <button onClick={recordPsi} style={{ ...btnPsi, flex: 1 }}>▶&ensp;RECORD</button>
-                  <button onClick={() => { psiEng.current.reset(); setPv({ I: 0.5, C: 0.5, B: 0.5, S: 1, Rp: 0, Rm: 0, V: 1, E: 1 }); refresh(n => n + 1); }} style={btnDim}>↺</button>
+                  <button onClick={() => { pe.reset(); setPv({ I: 0.5, C: 0.5, B: 0.5, S: 1, Rp: 0, Rm: 0, V: 1, E: 1 }); refresh(n => n + 1); }} style={btnDim}>↺</button>
                 </div>
               </div>
 
+              {/* Right: Trust + History */}
               <div>
                 <div style={{ background: "rgba(0,0,0,.15)", borderRadius: 6, padding: 14, marginBottom: 16 }}>
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
                     <span style={{ fontSize: "9px", color: T.psi, letterSpacing: "2px", fontWeight: 600 }}>ACCUMULATED TRUST</span>
-                    <span style={{ fontSize: "18px", fontFamily: "var(--serif)", color: T.psiL }}>{pe.calcK().toFixed(3)}</span>
+                    {/* PATCH: Show live K using slider values */}
+                    <span style={{ fontSize: "18px", fontFamily: "var(--serif)", color: T.psiL }}>{pe.calcK(pv.B, pv.S).toFixed(3)}</span>
                   </div>
                   <div style={{ fontSize: "10px", color: T.dim, lineHeight: 1.5 }}>
                     K = tanh(Σ(B·S) / λ) — λ = {pe.lambda}<br />
@@ -467,7 +530,7 @@ export default function StarAlignmentEngine() {
           </div>
         </section>
 
-        {/* ═══════════ V. STAR STATE ═══════════ */}
+        {/* V. STAR STATE */}
         <section style={{ borderTop: "2px solid rgba(255,255,255,.08)", marginTop: 20, padding: "24px 0" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 20 }}>
             <span style={{ fontSize: "14px" }}>★</span>
@@ -502,61 +565,18 @@ export default function StarAlignmentEngine() {
           </div>
         </section>
 
-        {/* ═══════════ FULL REPORT ═══════════ */}
+        {/* FULL REPORT BUTTON */}
         <div style={{ marginTop: 20, textAlign: "center" }}>
-          <button onClick={() => {
-            sync();
-            const e = engine.current, p = psiEng.current, lp = p.lastPsi();
-            const xi = e.xi(), g = e.gamma(), d = e.decay();
-            const sep = "═".repeat(50);
-            const report = `${sep}
-   STAR ALIGNMENT ENGINE — FULL REPORT V8.0
-   Proyecto Estrella · Integrated Evaluator
-${sep}
-Generated: ${new Date().toISOString()}
-
-─── Σ SIGMA — VIABILITY ───────────────
-  Ξ Index:       ${xi.toFixed(2)}
-  I:             ${sv.I.toFixed(3)}
-  C:             ${sv.C.toFixed(3)}
-  P:             ${sv.P.toFixed(3)}  ${sv.P < 0.9 ? "⚠ VIOLATION" : "✓ OK"}
-  H:             ${sv.H.toFixed(4)}
-  α accumulated: ${e.alphaAcc.toFixed(3)}
-  Status:        ${result ? result.status : "IDLE"}
-
-─── Γ GAMMA — RESILIENCE [EXPERIMENTAL] ──
-  Γ Index:       ${g.toFixed(2)}
-  S (Kernel):    ${res.S.toFixed(1)}
-  Φ (Support):   ${res.Phi.toFixed(2)}
-  Decay:         ${d.toFixed(3)}
-  Mode:          ${d > 0.7 ? "FULL" : d > 0.2 ? "DEGRADED" : "KERNEL"}
-  Retained:      ${xi > 0 ? (((g - res.S) / xi) * 100).toFixed(0) : 0}%
-
-─── Ψ PSI — RELATIONAL INTEGRITY [EXPERIMENTAL] ─
-  Last Ψ:        ${lp !== null ? lp.toFixed(3) : "N/A"}
-  K (Trust):     ${p.calcK().toFixed(3)}
-  Evaluations:   ${p.history.length}
-  Raw Trust Sum: ${p.rawSum.toFixed(2)}
-  λ (Horizon):   ${p.lambda}
-
-─── ★ STAR STATE ──────────────────────
-  Σ: ${sv.P >= 0.9 ? "OK" : "FAIL"}  Γ: ${d > 0.7 ? "OK" : "FAIL"}  Ψ: ${lp !== null && lp >= 0.6 ? "OK" : lp !== null ? "FAIL" : "N/A"}
-  Verdict: ${lp === null ? "AWAITING PSI" : (sv.P >= 0.9 && d > 0.7 && lp >= 0.6) ? "★ STAR STATE" : "✗ DIVERGENT"}
-
-─── FORMULAS ──────────────────────────
-  Ξ = (C·I·P) / H
-  Γ = S + Ξ·e^(-H·5·(1-Φ))
-  Ψ = (I·C)·tanh(Σ(B·S)/λ)·(1-max(Rp,Rm))·min(V,E)
-${sep}
-  github.com/tretoef-estrella · CC BY 4.0
-${sep}`;
-            navigator.clipboard.writeText(report);
-          }} style={{ padding: "10px 24px", borderRadius: 5, border: "1px solid rgba(255,255,255,.1)", cursor: "pointer", fontFamily: "var(--mono)", fontSize: "11px", letterSpacing: ".8px", fontWeight: 500, background: "rgba(255,255,255,.03)", color: T.dim }}>
-            📋&ensp;GENERATE FULL REPORT
-          </button>
+          <button onClick={generateReport} style={btnDim}>📋&ensp;GENERATE FULL REPORT</button>
+          {copied && (
+            <div style={{ marginTop: 12, padding: "10px 14px", background: "rgba(34,197,94,.1)", border: "1px solid rgba(34,197,94,.25)", borderRadius: 5, fontSize: "10px", color: T.green, animation: "fadeIn .3s ease" }}>
+              ✓ Report copied to clipboard
+            </div>
+          )}
           <div style={{ fontSize: "9px", color: "#334155", marginTop: 6 }}>Copies complete diagnostic to clipboard</div>
         </div>
 
+        {/* FOOTER */}
         <div style={{ marginTop: 16, fontSize: "10px", color: "#334155", textAlign: "center", letterSpacing: "1px" }}>
           Proyecto Estrella · Architect: Rafa · CC BY 4.0 · February 2026
         </div>
