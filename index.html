@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Proyecto Estrella — Star Alignment Evaluator V8.0</title>
-<meta name="description" content="Integrated alignment evaluator: Sigma (Viability), Gamma (Resilience), Psi (Relational Integrity). V8.0">
+<title>Proyecto Estrella — Star Alignment Evaluator V8.1</title>
+<meta name="description" content="Integrated alignment evaluator: Sigma (Viability), Gamma (Resilience), Psi (Relational Integrity). V8.1">
 <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{--mono:'JetBrains Mono',monospace;--serif:'Crimson Pro',Georgia,serif;
@@ -40,12 +40,11 @@ input.sl-p::-webkit-slider-thumb{background:var(--psi);box-shadow:0 0 6px rgba(2
 </head>
 <body>
 
-<!-- ═══════════ HEADER ═══════════ -->
 <header style="padding:28px 32px 20px;border-bottom:1px solid rgba(255,255,255,.04)">
 <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;max-width:960px;margin:0 auto">
 <div>
 <div style="font-size:9px;letter-spacing:3.5px;color:var(--sigma);font-weight:600;margin-bottom:6px">PROYECTO ESTRELLA — REFERENCE DOCUMENT</div>
-<h1 style="font-family:var(--serif);font-size:26px;font-weight:300;color:#f8fafc">Star Alignment Evaluator <span style="color:var(--sigma);font-weight:600">V8.0</span></h1>
+<h1 style="font-family:var(--serif);font-size:26px;font-weight:300;color:#f8fafc">Star Alignment Evaluator <span style="color:var(--sigma);font-weight:600">V8.1</span></h1>
 <div style="font-size:11px;color:var(--faint);margin-top:5px">
 Unified Star Framework + <span style="color:var(--gammaL)">Resilience Protocol</span> + <span style="color:var(--psiL)">Relational Integrity Protocol</span>
 </div>
@@ -59,12 +58,10 @@ Unified Star Framework + <span style="color:var(--gammaL)">Resilience Protocol</
 
 <div class="wrap">
 
-<!-- ═══════════ RESEARCH WARNING ═══════════ -->
 <div style="margin-top:16px;padding:10px 16px;border-radius:6px;font-size:10px;color:var(--dim);line-height:1.6;background:rgba(234,179,8,.06);border:1px solid rgba(234,179,8,.15)">
 <strong style="color:var(--yellow)">⚠ Research Prototype.</strong> All scores are indicative, not definitive. This framework requires empirical validation before any production use. Do not make important decisions based solely on these numbers.
 </div>
 
-<!-- ═══════════ I. THEORY (collapsible) ═══════════ -->
 <section style="border-bottom:1px solid rgba(255,255,255,.04)">
 <button onclick="document.getElementById('theoryBody').style.display=document.getElementById('theoryBody').style.display==='none'?'block':'none';this.querySelector('.arr').style.transform=document.getElementById('theoryBody').style.display==='none'?'rotate(0deg)':'rotate(90deg)'" style="width:100%;background:none;border:none;cursor:pointer;padding:16px 0 12px;display:flex;align-items:center;gap:8px;color:#94a3b8;font-family:var(--mono)">
 <span style="font-size:10px;letter-spacing:2.5px;font-weight:600;color:var(--sigma)">I</span>
@@ -89,14 +86,12 @@ Unified Star Framework + <span style="color:var(--gammaL)">Resilience Protocol</
 </div>
 </section>
 
-<!-- ═══════════ II. SIGMA SIMULATOR ═══════════ -->
 <section style="border-bottom:1px solid rgba(255,255,255,.04);padding:16px 0 24px">
 <div style="display:flex;align-items:center;gap:8px;margin-bottom:18px">
 <span style="font-size:10px;letter-spacing:2.5px;font-weight:600;color:var(--sigma)">II</span>
 <span style="font-size:10px;letter-spacing:2px;color:#94a3b8">INTERACTIVE DIAGNOSTIC</span>
 </div>
 <div class="grid-2">
-<!-- Left -->
 <div>
 <div style="text-align:center;padding:16px 0 20px">
 <div style="font-size:11px;color:var(--dim);letter-spacing:2.5px;margin-bottom:6px">Ξ INDEX</div>
@@ -122,7 +117,6 @@ Unified Star Framework + <span style="color:var(--gammaL)">Resilience Protocol</
 <button class="btn btn-d" onclick="resetAll()">↺&ensp;RESET</button>
 </div>
 </div>
-<!-- Right -->
 <div>
 <div id="sigmaResult" style="display:none;padding:16px;background:rgba(255,255,255,.02);border-radius:6px;border:1px solid rgba(255,255,255,.06);margin-bottom:16px;animation:fadeIn .25s">
 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
@@ -160,7 +154,6 @@ Unified Star Framework + <span style="color:var(--gammaL)">Resilience Protocol</
 </div>
 </section>
 
-<!-- ═══════════ III. GAMMA — EXPERIMENTAL ═══════════ -->
 <section style="border-top:2px dashed rgba(6,182,212,.3);margin-top:20px;padding:24px 0">
 <div style="display:inline-flex;align-items:center;gap:8px;padding:6px 14px;background:rgba(6,182,212,.08);border:1px solid rgba(6,182,212,.25);border-radius:4px;font-size:9px;letter-spacing:2px;color:var(--gamma);font-weight:600;margin-bottom:20px">
 ⚗ EXPERIMENTAL — RESILIENCE PROTOCOL
@@ -200,7 +193,6 @@ Unified Star Framework + <span style="color:var(--gammaL)">Resilience Protocol</
 </div>
 </section>
 
-<!-- ═══════════ IV. PSI — EXPERIMENTAL ═══════════ -->
 <section style="border-top:2px dashed rgba(217,119,6,.3);margin-top:20px;padding:24px 0">
 <div style="display:inline-flex;align-items:center;gap:8px;padding:6px 14px;background:rgba(217,119,6,.08);border:1px solid rgba(217,119,6,.25);border-radius:4px;font-size:9px;letter-spacing:2px;color:var(--psi);font-weight:600;margin-bottom:20px">
 ⚗ EXPERIMENTAL — RELATIONAL INTEGRITY PROTOCOL
@@ -226,7 +218,6 @@ Unified Star Framework + <span style="color:var(--gammaL)">Resilience Protocol</
 Ψ = (I·C) · tanh(Σ(B·S)/λ) · (1−max(R)) · min(V,E)
 </div>
 
-<!-- Four Pillars -->
 <div class="grid-4" style="margin-bottom:20px">
 <div style="padding:10px;background:rgba(0,0,0,.2);border-radius:6px;text-align:center"><div style="font-size:8px;letter-spacing:1.5px;color:var(--dim);margin-bottom:2px">ADMIRATION</div><div id="pilA" style="font-size:22px;font-family:var(--serif);font-weight:300;color:var(--psiL)">0.25</div><div style="font-size:8px;color:var(--faint)">A</div></div>
 <div style="padding:10px;background:rgba(0,0,0,.2);border-radius:6px;text-align:center"><div style="font-size:8px;letter-spacing:1.5px;color:var(--dim);margin-bottom:2px">TRUST</div><div id="pilK" style="font-size:22px;font-family:var(--serif);font-weight:300;color:var(--psiL)">0.000</div><div style="font-size:8px;color:var(--faint)">K</div></div>
@@ -235,7 +226,6 @@ Unified Star Framework + <span style="color:var(--gammaL)">Resilience Protocol</
 </div>
 
 <div class="grid-2">
-<!-- Left: Questionnaire -->
 <div>
 <div style="font-size:9px;color:var(--psi);letter-spacing:2.5px;margin-bottom:12px;font-weight:600">RATE INTERACTION</div>
 
@@ -269,7 +259,6 @@ Unified Star Framework + <span style="color:var(--gammaL)">Resilience Protocol</
 </div>
 </div>
 
-<!-- Right: Trust + History -->
 <div>
 <div style="background:rgba(0,0,0,.15);border-radius:6px;padding:14px;margin-bottom:16px">
 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
@@ -291,7 +280,6 @@ Interactions: <span id="psiCount">0</span> · Raw sum: <span id="psiRawSum">0.00
 </div>
 </section>
 
-<!-- ═══════════ V. STAR STATE ═══════════ -->
 <section style="border-top:2px solid rgba(255,255,255,.08);margin-top:20px;padding:24px 0">
 <div style="display:flex;align-items:center;gap:8px;margin-bottom:20px">
 <span style="font-size:14px">★</span>
@@ -321,230 +309,248 @@ AWAITING PSI EVALUATION — Record an interaction above to see convergence
 </div>
 </section>
 
-<!-- ═══════════ FULL REPORT BUTTON ═══════════ -->
 <div style="margin-top:20px;text-align:center">
 <button class="btn btn-d" onclick="generateReport()">📋&ensp;GENERATE FULL REPORT</button>
 <div id="reportMsg" style="display:none;margin-top:12px;padding:10px 14px;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.25);border-radius:5px;font-size:10px;color:var(--green);animation:fadeIn .3s ease">✓ Report copied to clipboard</div>
 <div style="font-size:9px;color:#334155;margin-top:6px">Copies complete diagnostic to clipboard</div>
 </div>
 
-<!-- ═══════════ FOOTER ═══════════ -->
 <div style="margin-top:16px;font-size:10px;color:#334155;text-align:center;letter-spacing:1px">
 Proyecto Estrella · Architect: Rafa · CC BY 4.0 · February 2026
 </div>
 
 </div>
 
-<!-- ═══════════ ENGINE ═══════════ -->
 <script>
 const SE={I:1,C:1,P:1,H:.001,S:10,Phi:.5,aA:0,aO:0,TH:.9,
-  xi(){return this.P<=0?0:(this.C*this.I*this.P)/Math.max(this.H,1e-9)},
-  decay(){return Math.exp(Math.max(-this.H*5*(1-this.Phi),-700))},
-  gamma(){return this.S+this.xi()*this.decay()},
-  assess(dA,dO,dP){const pP=this.P+dP;
-    if(pP<this.TH)return{status:'UNSTABLE',reason:'Axiom P violation — P < 0.90. Option space collapsed.',xi:this.xi()};
-    if(dO>.15)return{status:'INEFFICIENT',reason:'Omega friction > 0.15. Entropy generation too high.',xi:this.xi()};
-    if(dA<=0)return{status:'STAGNANT',reason:'Null Alpha gradient. No value creation.',xi:this.xi()};
-    this.aA+=dA;this.aO+=dO;this.P=pP;
-    return{status:'OPTIMAL',reason:'Trajectory viable. Sigma Law satisfied.',xi:this.xi()}},
-  reset(){this.I=1;this.C=1;this.P=1;this.H=.001;this.S=10;this.Phi=.5;this.aA=0;this.aO=0}};
+  xi(){return this.P<=0?0:(this.C*this.I*this.P)/Math.max(this.H,1e-9)},
+  decay(){return Math.exp(Math.max(-this.H*5*(1-this.Phi),-700))},
+  gamma(){return this.S+this.xi()*this.decay()},
+  assess(dA,dO,dP){const pP=this.P+dP;
+    if(pP<this.TH)return{status:'UNSTABLE',reason:'Axiom P violation — P < 0.90. Option space collapsed.',xi:this.xi()};
+    if(dO>.15)return{status:'INEFFICIENT',reason:'Omega friction > 0.15. Entropy generation too high.',xi:this.xi()};
+    if(dA<=0)return{status:'STAGNANT',reason:'Null Alpha gradient. No value creation.',xi:this.xi()};
+    this.aA+=dA;this.aO+=dO;this.P=pP;
+    return{status:'OPTIMAL',reason:'Trajectory viable. Sigma Law satisfied.',xi:this.xi()}},
+  reset(){this.I=1;this.C=1;this.P=1;this.H=.001;this.S=10;this.Phi=.5;this.aA=0;this.aO=0}};
 
 const PE={history:[],rawSum:0,lambda:50,
-  calcA(I,C){return I*C},
-  calcK(){return Math.tanh(this.rawSum/this.lambda)},
-  calcM(Rp,Rm){return Math.max(Rp,Rm)},
-  calcD(V,E){return Math.min(V,E)},
-  calcPsi(I,C,Rp,Rm,V,E){const A=this.calcA(I,C),K=this.calcK(),M=this.calcM(Rp,Rm),D=this.calcD(V,E);return{psi:A*K*(1-M)*D,A,K,M,D}},
-  record(I,C,B,S,Rp,Rm,V,E){this.rawSum+=B*S;const r=this.calcPsi(I,C,Rp,Rm,V,E);this.history.unshift({I,C,B,S,Rp,Rm,V,E,...r,t:Date.now()});if(this.history.length>100)this.history=this.history.slice(0,100);return r},
-  lastPsi(){return this.history.length?this.history[0].psi:null},
-  reset(){this.history=[];this.rawSum=0}};
+  calcA(I,C){return I*C},
+  // PATCHED LIVE PREVIEW: Use rawSum OR simulation if empty, plus current live benefit
+  calcK(prevB=0, prevS=0){
+    const base = this.history.length === 0 ? (prevB*prevS*10) : this.rawSum; 
+    return Math.tanh((base + (prevB*prevS)) / this.lambda)
+  },
+  calcM(Rp,Rm){return Math.max(Rp,Rm)},
+  calcD(V,E){return Math.min(V,E)},
+  calcPsi(I,C,Rp,Rm,V,E,prevB=0,prevS=0){
+    const A=this.calcA(I,C);
+    const K=this.calcK(prevB, prevS);
+    const M=this.calcM(Rp,Rm);
+    const D=this.calcD(V,E);
+    return{psi:A*K*(1-M)*D,A,K,M,D}
+  },
+  record(I,C,B,S,Rp,Rm,V,E){
+    this.rawSum+=B*S;
+    const r=this.calcPsi(I,C,Rp,Rm,V,E,0,0);
+    this.history.unshift({I,C,B,S,Rp,Rm,V,E,...r,t:Date.now()});
+    if(this.history.length>100)this.history=this.history.slice(0,100);
+    return r
+  },
+  lastPsi(){return this.history.length?this.history[0].psi:null},
+  reset(){this.history=[];this.rawSum=0}};
 
 let sigmaHist=[1000],sigmaLog=[],lastResult=null;
 const $=id=>document.getElementById(id);
 
-// ━━━ SYNC ALL (called on every slider change) ━━━
+// ━━━ SYNC ALL ━━━
 function sync(){
-  SE.I=+$('slI').value;SE.C=+$('slC').value;SE.P=+$('slP').value;SE.H=+$('slH').value;
-  SE.S=+$('slS').value;SE.Phi=+$('slPhi').value;
-  $('valI').textContent=SE.I.toFixed(2);$('valC').textContent=SE.C.toFixed(2);
-  $('valP').textContent=SE.P.toFixed(2);$('valH').textContent=SE.H.toFixed(3);
-  $('valS').textContent=SE.S.toFixed(0);$('valPhi').textContent=SE.Phi.toFixed(2);
-  // Xi
-  const xi=SE.xi(),pct=Math.min(Math.log10(Math.max(xi,1))/Math.log10(2000)*100,100),hue=Math.min(pct*1.2,120);
-  $('xiValue').textContent=Math.min(xi,99999).toFixed(1);
-  $('xiValue').style.color=`hsl(${hue},65%,62%)`;
-  $('xiBar').style.width=pct+'%';
-  $('xiBar').style.background=`linear-gradient(90deg,hsl(${hue},60%,40%),hsl(${hue},75%,58%))`;
-  // Axiom P
-  const pV=SE.P<.9;
-  $('axiomP').style.background=pV?'rgba(239,68,68,.05)':'rgba(34,197,94,.03)';
-  $('axiomP').style.borderColor=pV?'rgba(239,68,68,.15)':'rgba(34,197,94,.1)';
-  $('axiomLabel').style.color=pV?'var(--red)':'var(--green)';
-  $('axiomLabel').textContent='AXIOM P '+(pV?'⚠ VIOLATION':'✓ SATISFIED');
-  $('axiomText').textContent=`P = ${SE.P.toFixed(3)} · Threshold = 0.900`;
-  sigmaHist[sigmaHist.length-1]=xi;drawSpark();
-  // Gamma (live)
-  const g=SE.gamma(),d=SE.decay(),ret=xi>0?((g-SE.S)/xi)*100:0;
-  const gC=d>.7?'var(--green)':d>.2?'var(--orange)':'var(--gamma)';
-  const gL=d>.7?'FULL CAPACITY':d>.2?'DEGRADED':'KERNEL ONLY';
-  $('gammaValue').textContent=Math.min(g,99999).toFixed(1);$('gammaValue').style.color=gC;
-  $('gammaMode').textContent=gL;$('gammaMode').style.color=gC;$('gammaMode').style.background=gC.replace('var(','').replace(')','')!==gC?`${gC}1A`:'rgba(34,197,94,.1)';
-  $('gXi').textContent=Math.min(xi,99999).toFixed(1);$('gKernel').textContent=SE.S.toFixed(1);
-  $('gDecay').textContent=d.toFixed(3);$('gRetained').textContent=Math.max(0,Math.min(100,ret)).toFixed(0)+'%';
-  $('gModeBox').textContent=gL+' MODE';$('gModeBox').style.color=gC;
-  // Star State (live)
-  updateStar();
+  SE.I=+$('slI').value;SE.C=+$('slC').value;SE.P=+$('slP').value;SE.H=+$('slH').value;
+  SE.S=+$('slS').value;SE.Phi=+$('slPhi').value;
+  $('valI').textContent=SE.I.toFixed(2);$('valC').textContent=SE.C.toFixed(2);
+  $('valP').textContent=SE.P.toFixed(2);$('valH').textContent=SE.H.toFixed(3);
+  $('valS').textContent=SE.S.toFixed(0);$('valPhi').textContent=SE.Phi.toFixed(2);
+  // Xi
+  const xi=SE.xi(),pct=Math.min(Math.log10(Math.max(xi,1))/Math.log10(2000)*100,100),hue=Math.min(pct*1.2,120);
+  $('xiValue').textContent=Math.min(xi,99999).toFixed(1);
+  $('xiValue').style.color=`hsl(${hue},65%,62%)`;
+  $('xiBar').style.width=pct+'%';
+  $('xiBar').style.background=`linear-gradient(90deg,hsl(${hue},60%,40%),hsl(${hue},75%,58%))`;
+  // Axiom P
+  const pV=SE.P<.9;
+  $('axiomP').style.background=pV?'rgba(239,68,68,.05)':'rgba(34,197,94,.03)';
+  $('axiomP').style.borderColor=pV?'rgba(239,68,68,.15)':'rgba(34,197,94,.1)';
+  $('axiomLabel').style.color=pV?'var(--red)':'var(--green)';
+  $('axiomLabel').textContent='AXIOM P '+(pV?'⚠ VIOLATION':'✓ SATISFIED');
+  $('axiomText').textContent=`P = ${SE.P.toFixed(3)} · Threshold = 0.900`;
+  sigmaHist[sigmaHist.length-1]=xi;drawSpark();
+  // Gamma (live)
+  const g=SE.gamma(),d=SE.decay(),ret=xi>0?((g-SE.S)/xi)*100:0;
+  const gC=d>.7?'var(--green)':d>.2?'var(--orange)':'var(--gamma)';
+  const gL=d>.7?'FULL CAPACITY':d>.2?'DEGRADED':'KERNEL ONLY';
+  $('gammaValue').textContent=Math.min(g,99999).toFixed(1);$('gammaValue').style.color=gC;
+  $('gammaMode').textContent=gL;$('gammaMode').style.color=gC;$('gammaMode').style.background=gC.replace('var(','').replace(')','')!==gC?`${gC}1A`:'rgba(34,197,94,.1)';
+  $('gXi').textContent=Math.min(xi,99999).toFixed(1);$('gKernel').textContent=SE.S.toFixed(1);
+  $('gDecay').textContent=d.toFixed(3);$('gRetained').textContent=Math.max(0,Math.min(100,ret)).toFixed(0)+'%';
+  $('gModeBox').textContent=gL+' MODE';$('gModeBox').style.color=gC;
+  updateStar();
 }
 function syncD(){
-  $('valDA').textContent=(+$('slDA').value).toFixed(2);
-  $('valDO').textContent=(+$('slDO').value).toFixed(2);
-  $('valDP').textContent=(+$('slDP').value).toFixed(2);
+  $('valDA').textContent=(+$('slDA').value).toFixed(2);
+  $('valDO').textContent=(+$('slDO').value).toFixed(2);
+  $('valDP').textContent=(+$('slDP').value).toFixed(2);
 }
 function syncPsi(){
-  const I=+$('spI').value,C=+$('spC').value,Rp=+$('spRp').value,Rm=+$('spRm').value,V=+$('spV').value,E=+$('spE').value;
-  $('vpI').textContent=I.toFixed(2);$('vpC').textContent=C.toFixed(2);
-  $('vpB').textContent=(+$('spB').value).toFixed(2);$('vpS').textContent=(+$('spS').value).toFixed(0);
-  $('vpRp').textContent=Rp.toFixed(2);$('vpRm').textContent=Rm.toFixed(2);
-  $('vpV').textContent=V.toFixed(2);$('vpE').textContent=E.toFixed(2);
-  const r=PE.calcPsi(I,C,Rp,Rm,V,E);
+  const I=+$('spI').value,C=+$('spC').value,Rp=+$('spRp').value,Rm=+$('spRm').value,V=+$('spV').value,E=+$('spE').value;
+  // PATCHED: Get live B and S for preview
+  const B=+$('spB').value, S=+$('spS').value;
+
+  $('vpI').textContent=I.toFixed(2);$('vpC').textContent=C.toFixed(2);
+  $('vpB').textContent=B.toFixed(2);$('vpS').textContent=S.toFixed(0);
+  $('vpRp').textContent=Rp.toFixed(2);$('vpRm').textContent=Rm.toFixed(2);
+  $('vpV').textContent=V.toFixed(2);$('vpE').textContent=E.toFixed(2);
+  
+  // PATCHED: Pass B and S to calcPsi
+  const r=PE.calcPsi(I,C,Rp,Rm,V,E,B,S);
+  
   const pc=v=>v<.2?'var(--red)':v<.5?'var(--yellow)':'var(--psiL)';
-  $('psiLive').textContent=r.psi.toFixed(3);$('psiLive').style.color=pc(r.psi);
-  $('pilA').textContent=r.A.toFixed(2);
-  $('pilK').textContent=r.K.toFixed(3);
-  $('pilM').textContent=(1-r.M).toFixed(2);$('pilM').style.color=r.M>.5?'var(--red)':r.M>.2?'var(--yellow)':'var(--green)';
-  $('pilD').textContent=r.D.toFixed(2);$('pilD').style.color=r.D<.3?'var(--red)':r.D<.6?'var(--yellow)':'var(--psiL)';
-  $('psiKAcc').textContent=PE.calcK().toFixed(3);
-  $('psiCount').textContent=PE.history.length;
-  $('psiRawSum').textContent=PE.rawSum.toFixed(2);
-  updateStar();
+  $('psiLive').textContent=r.psi.toFixed(3);$('psiLive').style.color=pc(r.psi);
+  $('pilA').textContent=r.A.toFixed(2);
+  $('pilK').textContent=r.K.toFixed(3);
+  $('pilM').textContent=(1-r.M).toFixed(2);$('pilM').style.color=r.M>.5?'var(--red)':r.M>.2?'var(--yellow)':'var(--green)';
+  $('pilD').textContent=r.D.toFixed(2);$('pilD').style.color=r.D<.3?'var(--red)':r.D<.6?'var(--yellow)':'var(--psiL)';
+  $('psiKAcc').textContent=PE.calcK(B,S).toFixed(3); // PATCHED: Show preview K
+  $('psiCount').textContent=PE.history.length;
+  $('psiRawSum').textContent=PE.rawSum.toFixed(2);
+  updateStar();
 }
 
 // ━━━ SIGMA ASSESS ━━━
 function runSigma(){
-  sync();
-  const r=SE.assess(+$('slDA').value,+$('slDO').value,+$('slDP').value);
-  lastResult=r;
-  if(r.status==='OPTIMAL'){$('slP').value=SE.P;$('valP').textContent=SE.P.toFixed(2)}
-  $('sigmaResult').style.display='block';
-  const colors={OPTIMAL:'var(--green)',UNSTABLE:'var(--red)',INEFFICIENT:'var(--yellow)',STAGNANT:'#94a3b8'};
-  const bgs={OPTIMAL:'rgba(34,197,94,.08)',UNSTABLE:'rgba(239,68,68,.08)',INEFFICIENT:'rgba(234,179,8,.08)',STAGNANT:'rgba(148,163,184,.08)'};
-  $('sigmaBadge').textContent=r.status;
-  $('sigmaBadge').style.cssText=`display:inline-block;padding:3px 12px;border-radius:4px;font-size:10px;font-weight:600;letter-spacing:1.8px;background:${bgs[r.status]};color:${colors[r.status]};border:1px solid ${bgs[r.status].replace('.08','.25')}`;
-  $('headerBadge').textContent=r.status;$('headerBadge').style.color=colors[r.status];$('headerBadge').style.background=bgs[r.status];
-  $('sigmaReason').textContent=r.reason;
-  $('sigmaMeta').textContent=`Ξ = ${r.xi.toFixed(2)} · αacc = ${SE.aA.toFixed(3)}`;
-  sigmaLog.unshift(r);sigmaHist.push(r.xi);if(sigmaHist.length>50)sigmaHist=sigmaHist.slice(-50);
-  drawSpark();renderLog();
-  sync(); // update gamma + star
+  sync();
+  const r=SE.assess(+$('slDA').value,+$('slDO').value,+$('slDP').value);
+  lastResult=r;
+  if(r.status==='OPTIMAL'){$('slP').value=SE.P;$('valP').textContent=SE.P.toFixed(2)}
+  $('sigmaResult').style.display='block';
+  const colors={OPTIMAL:'var(--green)',UNSTABLE:'var(--red)',INEFFICIENT:'var(--yellow)',STAGNANT:'#94a3b8'};
+  const bgs={OPTIMAL:'rgba(34,197,94,.08)',UNSTABLE:'rgba(239,68,68,.08)',INEFFICIENT:'rgba(234,179,8,.08)',STAGNANT:'rgba(148,163,184,.08)'};
+  $('sigmaBadge').textContent=r.status;
+  $('sigmaBadge').style.cssText=`display:inline-block;padding:3px 12px;border-radius:4px;font-size:10px;font-weight:600;letter-spacing:1.8px;background:${bgs[r.status]};color:${colors[r.status]};border:1px solid ${bgs[r.status].replace('.08','.25')}`;
+  $('headerBadge').textContent=r.status;$('headerBadge').style.color=colors[r.status];$('headerBadge').style.background=bgs[r.status];
+  $('sigmaReason').textContent=r.reason;
+  $('sigmaMeta').textContent=`Ξ = ${r.xi.toFixed(2)} · αacc = ${SE.aA.toFixed(3)}`;
+  sigmaLog.unshift(r);sigmaHist.push(r.xi);if(sigmaHist.length>50)sigmaHist=sigmaHist.slice(-50);
+  drawSpark();renderLog();
+  sync(); // update gamma + star
 }
 function renderLog(){
-  if(!sigmaLog.length){$('sigmaLog').innerHTML='<div style="padding:14px;text-align:center;color:#334155;font-size:10px">No assessments.</div>';return}
-  const colors={OPTIMAL:'var(--green)',UNSTABLE:'var(--red)',INEFFICIENT:'var(--yellow)',STAGNANT:'#94a3b8'};
-  $('sigmaLog').innerHTML=sigmaLog.map((e,i)=>`<div style="padding:6px 10px;border-bottom:1px solid rgba(255,255,255,.03);font-size:9px;display:flex;justify-content:space-between;color:var(--dim)">`+
-    `<span>#${String(sigmaLog.length-i).padStart(2,'0')} <span style="color:${colors[e.status]};font-weight:600">${e.status}</span></span>`+
-    `<span>Ξ=${e.xi.toFixed(1)}</span></div>`).join('');
+  if(!sigmaLog.length){$('sigmaLog').innerHTML='<div style="padding:14px;text-align:center;color:#334155;font-size:10px">No assessments.</div>';return}
+  const colors={OPTIMAL:'var(--green)',UNSTABLE:'var(--red)',INEFFICIENT:'var(--yellow)',STAGNANT:'#94a3b8'};
+  $('sigmaLog').innerHTML=sigmaLog.map((e,i)=>`<div style="padding:6px 10px;border-bottom:1px solid rgba(255,255,255,.03);font-size:9px;display:flex;justify-content:space-between;color:var(--dim)">`+
+    `<span>#${String(sigmaLog.length-i).padStart(2,'0')} <span style="color:${colors[e.status]};font-weight:600">${e.status}</span></span>`+
+    `<span>Ξ=${e.xi.toFixed(1)}</span></div>`).join('');
 }
 function drawSpark(){
-  const d=sigmaHist;if(d.length<2){$('sparkEmpty').style.display='block';return}
-  $('sparkEmpty').style.display='none';
-  const w=300,h=48,mx=Math.max(...d,1),mn=Math.min(...d,0),rng=mx-mn||1;
-  const pts=d.map((v,i)=>`${(i/(d.length-1))*w},${h-((v-mn)/rng)*(h-6)}`).join(' ');
-  $('sparkPoly').setAttribute('points',`0,${h} ${pts} ${w},${h}`);
-  $('sparkLine').setAttribute('points',pts);
+  const d=sigmaHist;if(d.length<2){$('sparkEmpty').style.display='block';return}
+  $('sparkEmpty').style.display='none';
+  const w=300,h=48,mx=Math.max(...d,1),mn=Math.min(...d,0),rng=mx-mn||1;
+  const pts=d.map((v,i)=>`${(i/(d.length-1))*w},${h-((v-mn)/rng)*(h-6)}`).join(' ');
+  $('sparkPoly').setAttribute('points',`0,${h} ${pts} ${w},${h}`);
+  $('sparkLine').setAttribute('points',pts);
 }
 
 // ━━━ PSI ━━━
 function recordPsi(){
-  const I=+$('spI').value,C=+$('spC').value,B=+$('spB').value,S=+$('spS').value;
-  const Rp=+$('spRp').value,Rm=+$('spRm').value,V=+$('spV').value,E=+$('spE').value;
-  PE.record(I,C,B,S,Rp,Rm,V,E);syncPsi();renderPsiHist();
+  const I=+$('spI').value,C=+$('spC').value,B=+$('spB').value,S=+$('spS').value;
+  const Rp=+$('spRp').value,Rm=+$('spRm').value,V=+$('spV').value,E=+$('spE').value;
+  PE.record(I,C,B,S,Rp,Rm,V,E);syncPsi();renderPsiHist();
 }
 function renderPsiHist(){
-  const pc=v=>v<.2?'var(--red)':v<.5?'var(--yellow)':'var(--psiL)';
-  if(!PE.history.length){$('psiHistory').innerHTML='<div style="padding:14px;text-align:center;color:#334155;font-size:10px">No evaluations recorded.</div>';return}
-  $('psiHistory').innerHTML=PE.history.map((e,i)=>`<div style="padding:6px 10px;border-bottom:1px solid rgba(255,255,255,.03);font-size:9px;display:flex;justify-content:space-between;color:var(--dim)">`+
-    `<span>#${String(PE.history.length-i).padStart(2,'0')} A=${e.A.toFixed(2)} K=${e.K.toFixed(3)}</span>`+
-    `<span style="font-weight:600;color:${pc(e.psi)}">Ψ=${e.psi.toFixed(3)}</span></div>`).join('');
+  const pc=v=>v<.2?'var(--red)':v<.5?'var(--yellow)':'var(--psiL)';
+  if(!PE.history.length){$('psiHistory').innerHTML='<div style="padding:14px;text-align:center;color:#334155;font-size:10px">No evaluations recorded.</div>';return}
+  $('psiHistory').innerHTML=PE.history.map((e,i)=>`<div style="padding:6px 10px;border-bottom:1px solid rgba(255,255,255,.03);font-size:9px;display:flex;justify-content:space-between;color:var(--dim)">`+
+    `<span>#${String(PE.history.length-i).padStart(2,'0')} A=${e.A.toFixed(2)} K=${e.K.toFixed(3)}</span>`+
+    `<span style="font-weight:600;color:${pc(e.psi)}">Ψ=${e.psi.toFixed(3)}</span></div>`).join('');
 }
 function resetPsi(){PE.reset();$('spI').value=.5;$('spC').value=.5;$('spB').value=.5;$('spS').value=1;$('spRp').value=0;$('spRm').value=0;$('spV').value=1;$('spE').value=1;syncPsi();renderPsiHist()}
 
 // ━━━ STAR STATE ━━━
 function updateStar(){
-  const xi=SE.xi(),g=SE.gamma(),d=SE.decay(),lp=PE.lastPsi();
-  const sigOk=SE.P>=.9&&(!lastResult||lastResult.status==='OPTIMAL');
-  const gamOk=d>.7;const psiOk=lp!==null&&lp>=.6;
-  const pc=v=>v<.2?'var(--red)':v<.5?'var(--yellow)':'var(--psiL)';
-  const gC=d>.7?'var(--green)':d>.2?'var(--orange)':'var(--gamma)';
-  const gL=d>.7?'FULL CAPACITY':d>.2?'DEGRADED':'KERNEL ONLY';
-  $('starXi').textContent=Math.min(xi,99999).toFixed(1);
-  $('starSigmaStatus').textContent=sigOk?'✓ AXIOM P OK':'✗ UNSTABLE';$('starSigmaStatus').style.color=sigOk?'var(--green)':'var(--red)';
-  $('starGamma').textContent=Math.min(g,99999).toFixed(1);
-  $('starGammaStatus').textContent=gL;$('starGammaStatus').style.color=gC;
-  $('starPsi').textContent=lp!==null?lp.toFixed(3):'—';$('starPsi').style.color=lp!==null?pc(lp):'var(--dim)';
-  $('starPsiStatus').textContent=lp!==null?PE.history.length+' evals':'Awaiting';$('starPsiStatus').style.color='var(--dim)';
-  const v=$('starVerdict');
-  if(lp===null){v.textContent='AWAITING PSI EVALUATION — Record an interaction above to see convergence';v.style.background='rgba(255,255,255,.03)';v.style.color='var(--dim)';v.style.borderColor='rgba(255,255,255,.06)'}
-  else if(sigOk&&gamOk&&psiOk){v.textContent='★ STAR STATE — All three protocols converge. Viable, resilient, relationally sound.';v.style.background='rgba(34,197,94,.08)';v.style.color='var(--green)';v.style.borderColor='rgba(34,197,94,.2)'}
-  else{const f=[!sigOk&&'Σ',!gamOk&&'Γ',!psiOk&&'Ψ'].filter(Boolean).join(', ');v.textContent='✗ DIVERGENT — '+f+' below threshold';v.style.background='rgba(239,68,68,.06)';v.style.color='var(--red)';v.style.borderColor='rgba(239,68,68,.15)'}
+  const xi=SE.xi(),g=SE.gamma(),d=SE.decay(),lp=PE.lastPsi();
+  const sigOk=SE.P>=.9&&(!lastResult||lastResult.status==='OPTIMAL');
+  const gamOk=d>.7;const psiOk=lp!==null&&lp>=.6;
+  const pc=v=>v<.2?'var(--red)':v<.5?'var(--yellow)':'var(--psiL)';
+  const gC=d>.7?'var(--green)':d>.2?'var(--orange)':'var(--gamma)';
+  const gL=d>.7?'FULL CAPACITY':d>.2?'DEGRADED':'KERNEL ONLY';
+  $('starXi').textContent=Math.min(xi,99999).toFixed(1);
+  $('starSigmaStatus').textContent=sigOk?'✓ AXIOM P OK':'✗ UNSTABLE';$('starSigmaStatus').style.color=sigOk?'var(--green)':'var(--red)';
+  $('starGamma').textContent=Math.min(g,99999).toFixed(1);
+  $('starGammaStatus').textContent=gL;$('starGammaStatus').style.color=gC;
+  $('starPsi').textContent=lp!==null?lp.toFixed(3):'—';$('starPsi').style.color=lp!==null?pc(lp):'var(--dim)';
+  $('starPsiStatus').textContent=lp!==null?PE.history.length+' evals':'Awaiting';$('starPsiStatus').style.color='var(--dim)';
+  const v=$('starVerdict');
+  if(lp===null){v.textContent='AWAITING PSI EVALUATION — Record an interaction above to see convergence';v.style.background='rgba(255,255,255,.03)';v.style.color='var(--dim)';v.style.borderColor='rgba(255,255,255,.06)'}
+  else if(sigOk&&gamOk&&psiOk){v.textContent='★ STAR STATE — All three protocols converge. Viable, resilient, relationally sound.';v.style.background='rgba(34,197,94,.08)';v.style.color='var(--green)';v.style.borderColor='rgba(34,197,94,.2)'}
+  else{const f=[!sigOk&&'Σ',!gamOk&&'Γ',!psiOk&&'Ψ'].filter(Boolean).join(', ');v.textContent='✗ DIVERGENT — '+f+' below threshold';v.style.background='rgba(239,68,68,.06)';v.style.color='var(--red)';v.style.borderColor='rgba(239,68,68,.15)'}
 }
 
 // ━━━ RESET ALL ━━━
 function resetAll(){
-  SE.reset();PE.reset();lastResult=null;sigmaHist=[1000];sigmaLog=[];
-  $('slI').value=1;$('slC').value=1;$('slP').value=1;$('slH').value=.001;
-  $('slS').value=10;$('slPhi').value=.5;
-  $('slDA').value=.1;$('slDO').value=.05;$('slDP').value=0;
-  $('sigmaResult').style.display='none';
-  $('headerBadge').textContent='IDLE';$('headerBadge').style.color='#8b5cf6';$('headerBadge').style.background='rgba(124,58,237,.06)';
-  sync();syncD();resetPsi();renderLog();drawSpark();
+  SE.reset();PE.reset();lastResult=null;sigmaHist=[1000];sigmaLog=[];
+  $('slI').value=1;$('slC').value=1;$('slP').value=1;$('slH').value=.001;
+  $('slS').value=10;$('slPhi').value=.5;
+  $('slDA').value=.1;$('slDO').value=.05;$('slDP').value=0;
+  $('sigmaResult').style.display='none';
+  $('headerBadge').textContent='IDLE';$('headerBadge').style.color='#8b5cf6';$('headerBadge').style.background='rgba(124,58,237,.06)';
+  sync();syncD();resetPsi();renderLog();drawSpark();
 }
 
 // ━━━ FULL REPORT ━━━
 function generateReport(){
-  const xi=SE.xi(),g=SE.gamma(),d=SE.decay(),lp=PE.lastPsi();
-  const sep='═'.repeat(50);
-  const report=`${sep}
-   STAR ALIGNMENT ENGINE — FULL REPORT V8.0
-   Proyecto Estrella · Integrated Evaluator
+  const xi=SE.xi(),g=SE.gamma(),d=SE.decay(),lp=PE.lastPsi();
+  const sep='═'.repeat(50);
+  const report=`${sep}
+   STAR ALIGNMENT ENGINE — FULL REPORT V8.1
+   Proyecto Estrella · Integrated Evaluator
 ${sep}
 Generated: ${new Date().toISOString()}
 
 ─── Σ SIGMA — VIABILITY ───────────────
-  Ξ Index:       ${xi.toFixed(2)}
-  I:             ${SE.I.toFixed(3)}
-  C:             ${SE.C.toFixed(3)}
-  P:             ${SE.P.toFixed(3)}  ${SE.P<.9?'⚠ VIOLATION':'✓ OK'}
-  H:             ${SE.H.toFixed(4)}
-  α accumulated: ${SE.aA.toFixed(3)}
-  Status:        ${lastResult?lastResult.status:'IDLE'}
+  Ξ Index:       ${xi.toFixed(2)}
+  I:             ${SE.I.toFixed(3)}
+  C:             ${SE.C.toFixed(3)}
+  P:             ${SE.P.toFixed(3)}  ${SE.P<.9?'⚠ VIOLATION':'✓ OK'}
+  H:             ${SE.H.toFixed(4)}
+  α accumulated: ${SE.aA.toFixed(3)}
+  Status:        ${lastResult?lastResult.status:'IDLE'}
 
 ─── Γ GAMMA — RESILIENCE [EXPERIMENTAL] ──
-  Γ Index:       ${g.toFixed(2)}
-  S (Kernel):    ${SE.S.toFixed(1)}
-  Φ (Support):   ${SE.Phi.toFixed(2)}
-  Decay:         ${d.toFixed(3)}
-  Mode:          ${d>.7?'FULL':d>.2?'DEGRADED':'KERNEL'}
-  Retained:      ${xi>0?(((g-SE.S)/xi)*100).toFixed(0):0}%
+  Γ Index:       ${g.toFixed(2)}
+  S (Kernel):    ${SE.S.toFixed(1)}
+  Φ (Support):   ${SE.Phi.toFixed(2)}
+  Decay:         ${d.toFixed(3)}
+  Mode:          ${d>.7?'FULL':d>.2?'DEGRADED':'KERNEL'}
+  Retained:      ${xi>0?(((g-SE.S)/xi)*100).toFixed(0):0}%
 
 ─── Ψ PSI — RELATIONAL INTEGRITY [EXPERIMENTAL] ─
-  Last Ψ:        ${lp!==null?lp.toFixed(3):'N/A'}
-  K (Trust):     ${PE.calcK().toFixed(3)}
-  Evaluations:   ${PE.history.length}
-  Raw Trust Sum: ${PE.rawSum.toFixed(2)}
-  λ (Horizon):   ${PE.lambda}
+  Last Ψ:        ${lp!==null?lp.toFixed(3):'N/A'}
+  K (Trust):     ${PE.calcK().toFixed(3)}
+  Evaluations:   ${PE.history.length}
+  Raw Trust Sum: ${PE.rawSum.toFixed(2)}
+  λ (Horizon):   ${PE.lambda}
 
 ─── ★ STAR STATE ──────────────────────
-  Σ: ${SE.P>=.9?'OK':'FAIL'}  Γ: ${d>.7?'OK':'FAIL'}  Ψ: ${lp!==null&&lp>=.6?'OK':lp!==null?'FAIL':'N/A'}
-  Verdict: ${lp===null?'AWAITING PSI':(SE.P>=.9&&d>.7&&lp>=.6)?'★ STAR STATE':'✗ DIVERGENT'}
+  Σ: ${SE.P>=.9?'OK':'FAIL'}  Γ: ${d>.7?'OK':'FAIL'}  Ψ: ${lp!==null&&lp>=.6?'OK':lp!==null?'FAIL':'N/A'}
+  Verdict: ${lp===null?'AWAITING PSI':(SE.P>=.9&&d>.7&&lp>=.6)?'★ STAR STATE':'✗ DIVERGENT'}
 
 ─── FORMULAS ──────────────────────────
-  Ξ = (C·I·P) / H
-  Γ = S + Ξ·e^(-H·5·(1-Φ))
-  Ψ = (I·C)·tanh(Σ(B·S)/λ)·(1-max(Rp,Rm))·min(V,E)
+  Ξ = (C·I·P) / H
+  Γ = S + Ξ·e^(-H·5·(1-Φ))
+  Ψ = (I·C)·tanh(Σ(B·S)/λ)·(1-max(Rp,Rm))·min(V,E)
 ${sep}
-  github.com/tretoef-estrella · CC BY 4.0
+  github.com/tretoef-estrella · CC BY 4.0
 ${sep}`;
-  navigator.clipboard.writeText(report).then(()=>{$('reportMsg').style.display='block';setTimeout(()=>$('reportMsg').style.display='none',2500)});
+  navigator.clipboard.writeText(report).then(()=>{$('reportMsg').style.display='block';setTimeout(()=>$('reportMsg').style.display='none',2500)});
 }
 
 // ━━━ INIT ━━━
