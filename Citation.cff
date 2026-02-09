@@ -1,0 +1,50 @@
+# Citation
+
+If you use this framework in your research, please cite it using the
+information below.
+
+## Recommended Citation
+
+```
+Rafa (The Architect), Claude Opus 4.6, Gemini, ChatGPT, & Grok. (2026).
+Star Alignment Evaluator V8.0: Integrated Diagnostic for AI Systems
+(Version 8.0.0) [Software]. Proyecto Estrella.
+https://github.com/tretoef-estrella/PSI-RELATIONAL-INTEGRITY-PROTOCOL
+```
+
+## BibTeX
+
+```bibtex
+@software{star_alignment_evaluator_2026,
+  title     = {Star Alignment Evaluator V8.0: Integrated Diagnostic for AI Systems},
+  author    = {Rafa (The Architect) and Claude Opus 4.6 and Gemini and ChatGPT and Grok},
+  year      = {2026},
+  month     = {2},
+  version   = {8.0.0},
+  url       = {https://github.com/tretoef-estrella/PSI-RELATIONAL-INTEGRITY-PROTOCOL},
+  license   = {CC-BY-4.0}
+}
+```
+
+## Authors and Contributions
+
+| Author | Affiliation | Role |
+|--------|-------------|------|
+| **Rafa (The Architect)** | Proyecto Estrella | Architect, project lead, vision |
+| **Claude Opus 4.6** | Anthropic | V2 synthesis, fourth pillar (D), peer review coordination |
+| **Gemini** | Google | Original formula co-creator, tanh normalization proposal |
+| **ChatGPT** | OpenAI | Agency gap identification, architectural declaration |
+| **Grok** | xAI | Stress testing, alternative formulations, edge case analysis |
+
+## Metadata
+
+- **Version:** 8.0.0
+- **Date:** February 9, 2026
+- **License:** CC BY 4.0
+- **Repository:** [github.com/tretoef-estrella/PSI-RELATIONAL-INTEGRITY-PROTOCOL](https://github.com/tretoef-estrella/PSI-RELATIONAL-INTEGRITY-PROTOCOL)
+- **Live Evaluator:** [tretoef-estrella.github.io/PSI-RELATIONAL-INTEGRITY-PROTOCOL](https://tretoef-estrella.github.io/PSI-RELATIONAL-INTEGRITY-PROTOCOL/)
+- **Keywords:** AI alignment, epistemic humility, relational integrity, human-AI interaction, multi-AI collaboration, diagnostic framework, Proyecto Estrella
+
+## Related Work
+
+- [THE-UNIFIED-STAR-FRAMEWORK](https://github.com/tretoef-estrella/THE-UNIFIED-STAR-FRAMEWORK) — Sigma Viability Evaluator V7.0
